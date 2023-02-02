@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { useState } from 'react';
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 function App() {
   const auth = getAuth();
@@ -35,6 +35,7 @@ function App() {
         // The signed-in user info.
         const user = result.user;
         const { displayName, email, photoURL } = user;
+        console.log(token);
 
         const userInfo = {
           isSignedIn: true,
@@ -53,6 +54,8 @@ function App() {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
+
+        console.log(errorCode, errorMessage, credential, email);
         // ...
       });
   }
@@ -82,7 +85,7 @@ function App() {
         const accessToken = credential.accessToken;
 
         const {displayName, email, photoURL} = user;
-        console.log(user);
+        console.log(user, accessToken);
 
         const userInfo = {
           isSignedIn: true,
@@ -103,6 +106,8 @@ function App() {
         // The AuthCredential type that was used.
         const credential = FacebookAuthProvider.credentialFromError(error);
 
+        console.log(errorCode, errorMessage, credential, email);
+
         // ...
       });
   }
@@ -117,6 +122,8 @@ function App() {
         // This gives you a GitHub Access Token. You can use it to access the GitHub API.
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
+
+        console.log(token);
 
         // The signed-in user info.
         const user = result.user;
@@ -138,7 +145,7 @@ function App() {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GithubAuthProvider.credentialFromError(error);
-        console.log(errorMessage);
+        console.log(errorMessage, errorCode, email, credential);
         // ...
       });
   }
